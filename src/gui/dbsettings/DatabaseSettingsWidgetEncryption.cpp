@@ -177,7 +177,6 @@ void DatabaseSettingsWidgetEncryption::loadKdfParameters()
     }
 
     auto kdf = m_db->kdf();
-    Q_ASSERT(kdf);
     if (!kdf) {
         return;
     }
@@ -384,7 +383,11 @@ void DatabaseSettingsWidgetEncryption::setAdvancedMode(bool advanced)
     if (advanced) {
         loadKdfParameters();
     } else {
-        m_ui->compatibilitySelection->setCurrentIndex(m_db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3 ? KDBX3 : KDBX4);
+        auto version = KDBX4;
+        if (m_db->kdf()) {
+            version = (m_db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) ? KDBX3 : KDBX4;
+        }
+        m_ui->compatibilitySelection->setCurrentIndex(version);
     }
 
     m_ui->advancedSettings->setVisible(advanced);
