@@ -101,12 +101,13 @@ modules:
       - /bin
   - name: keepassxc
     sources:
-      - type: git
-        path: "./"
+      - type: dir
+        path: ../
     config-opts:
-      - "-DCMAKE_BUILD_TYPE=Release"
+      - "-DCMAKE_BUILD_TYPE=Debug"
       - "-DKEEPASSXC_DIST_TYPE=Flatpak"
-      - "-DKEEPASSXC_BUILD_TYPE=Release"
+      - "-DKEEPASSXC_BUILD_TYPE=Snapshot"
+      - "-DWITH_TESTS=ON"
       - "-DCMAKE_INSTALL_LIBDIR=lib"
       - "-DWITH_XC_UPDATECHECK=OFF"
       - "-DWITH_XC_AUTOTYPE=ON"
